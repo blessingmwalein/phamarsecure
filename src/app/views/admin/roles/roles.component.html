@@ -1,0 +1,118 @@
+<div class="flex flex-wrap mt-4">
+  <div class="w-full mb-12 px-4">
+    <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded"
+      [ngClass]="color === 'light' ? 'bg-white' : 'bg-red-900 text-white'">
+      <div class="rounded-t mb-0 px-4 py-3 border-0">
+        <div class="flex flex-wrap items-center">
+          <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+            <h3 class="font-semibold text-lg" [ngClass]="color === 'light' ? 'text-blueGray-700' : 'text-white'">
+              Roles
+            </h3>
+            <button (click)="toggleModal(false, null)"
+              class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="button">
+              {{showModal ?"Cancel" : "Create New Role"}}
+            </button>
+            <div *ngIf="showModal" class="flex-auto px-4 lg:px-10 py-10 pt-0">
+              <form [formGroup]="roleForm">
+
+                <div class="flex flex-wrap">
+                  <div class="w-full lg:w-6/12 px-4">
+                    <div class="relative w-full mb-3">
+                      <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                        Name
+                      </label>
+                      <input type="text"
+                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        formControlName="name" />
+                    </div>
+                  </div>
+                  <div class="w-full lg:w-6/12 px-4">
+                    <div class="relative w-full mb-3">
+
+                      <button [disabled]="loading" (click)="submitForm()"
+                        class="bg-red-500 mt-6 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button">
+                        Save
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+
+                <hr class="mt-6 border-b-1 border-blueGray-300" />
+
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="block w-full overflow-x-auto">
+        <!-- Projects table -->
+        <table class="items-center w-full bg-transparent border-collapse">
+          <thead>
+            <tr>
+              <th
+                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                [ngClass]="
+              color === 'light'
+                ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                : 'bg-red-800 text-red-300 border-red-700'
+            ">
+                Id
+              </th>
+              <th
+                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                [ngClass]="
+              color === 'light'
+                ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                : 'bg-red-800 text-red-300 border-red-700'
+            ">
+                Name
+              </th>
+
+
+              <th
+                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                [ngClass]="
+              color === 'light'
+                ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                : 'bg-red-800 text-red-300 border-red-700'
+            "></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let role of roles">
+              <th
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                {{ role.id }}
+              </th>
+              <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                {{role.name}}
+              </td>
+
+
+              <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                <button (click)="toggleModal(true, role)"
+                  class="text-red-500 bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  type="button">
+                  Edit
+                </button>
+                <button
+                  class="text-red-500 bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  type="button">
+                  Delete
+                </button>
+
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</div>
