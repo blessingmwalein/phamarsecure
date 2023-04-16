@@ -93,7 +93,7 @@ import { ChemicalsComponent } from "./views/admin/chemicals/chemicals.component"
     ProfileComponent,
     UsersComponent,
     RolesComponent,
-    ChemicalsComponent
+    ChemicalsComponent,
   ],
   imports: [
     BrowserModule,

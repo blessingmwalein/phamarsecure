@@ -88,7 +88,7 @@ export class AuthService {
   isSuperAdmin() {
     var cred = this.getAuthDetails();
     //chek if user is super admin
-    if (cred.role.name === "Manager") {
+    if (cred.role.name === "Researcher") {
       return true;
     }
     return false;

@@ -30,4 +30,8 @@ export class ChemicalsService {
   deleteChemical(id) {
     return this.http.delete(`${this.baseUrl}chemicals/${id}`);
   }
+
+  searchChemicals(search) {
+    return this.http.post(`${this.baseUrl}chemicals/search/mix`, search);
+  }
 }

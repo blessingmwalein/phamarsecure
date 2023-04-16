@@ -41,7 +41,7 @@ export class CardStatsComponent implements OnInit {
   set statPercent(statPercent: string) {
     this._statPercent = statPercent === undefined ? "3.48" : statPercent;
   }
-  private _statPercent = "3.48";
+  private _statPercent = "";
 
   // can be any of the text color utilities
   // from tailwindcss

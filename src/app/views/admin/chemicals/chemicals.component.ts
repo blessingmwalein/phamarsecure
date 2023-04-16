@@ -21,6 +21,7 @@ export class ChemicalsComponent implements OnInit {
   chemicals: Chemical[];
   // items:Item[];
   chemicalForm: FormGroup;
+  searchForm: FormGroup;
   @Input()
   get color(): string {
     return this._color;
@@ -38,6 +39,8 @@ export class ChemicalsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getChemicals();
+    this.isReseacrcher = this.authServices.isSuperAdmin();
+
     this.chemicalForm = new FormGroup({
       name: new FormControl("", Validators.required),
       description: new FormControl("", Validators.required),
@@ -49,6 +52,10 @@ export class ChemicalsComponent implements OnInit {
           qty: new FormControl("", Validators.required),
         }),
       ]),
+    });
+
+    this.searchForm = new FormGroup({
+      query: new FormControl(""),
     });
   }
 
@@ -71,6 +78,16 @@ export class ChemicalsComponent implements OnInit {
     items.removeAt(i);
   }
 
+  submitSearchForm() {
+    this.chemicalSevice
+      .searchChemicals(this.searchForm.value)
+      .subscribe((data: any) => {
+        this.chemicals = data.chemicals;
+      },(error) => {
+        console.log(error);
+      });
+  }
+
   getChemicals() {
     this.chemicalSevice.getChemicals().subscribe(
       (data: any) => {
@@ -87,6 +104,8 @@ export class ChemicalsComponent implements OnInit {
   chemical: Chemical;
   loading = false;
 
+  isReseacrcher: boolean;
+
   toggleModal(isEdit, chemical: Chemical) {
     this.isEdit = isEdit;
     this.showModal = !this.showModal;
@@ -95,9 +114,31 @@ export class ChemicalsComponent implements OnInit {
         name: chemical.name,
         description: chemical.description,
         timeline: chemical.timeline,
+        //MAP ITEMS IN FORM
       });
+
+      //clear items
+      this.chemicalItemsForm.clear();
+      const items = this.chemicalForm.get("items") as FormArray;
+
+      chemical.items.forEach((item) => {
+        items.push(
+          new FormGroup({
+            name: new FormControl(item.name, Validators.required),
+            description: new FormControl(item.description, Validators.required),
+            qty: new FormControl(item.qty, Validators.required),
+            id: new FormControl(item.id),
+          })
+        );
+      });
+
+      console.log(this.chemicalItemsForm.value);
       this.chemical = chemical;
     }
+  }
+
+  get chemicalItemsForm(): FormArray {
+    return this.chemicalForm.get("items") as FormArray;
   }
 
   submitForm() {

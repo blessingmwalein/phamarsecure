@@ -11,4 +11,5 @@ export interface Item {
   description: string;
   qty:         number;
   chemicalId:  number;
+  id:          number | null;
 }
